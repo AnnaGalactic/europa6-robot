@@ -59,6 +59,7 @@ void setup() {
   pinMode(bttnPlay, INPUT);
   pinMode(recordLED, OUTPUT);
   Serial.println("");        // Print a blank line
+  setupMotors();  
  }
 
 void loop () {
