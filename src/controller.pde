@@ -59,6 +59,7 @@ void setup() {
   pinMode(bttnPlay, INPUT);
   pinMode(recordLED, OUTPUT);
   Serial.println("");        // Print a blank line
+  setupMotors();  
  }
 
 void loop () {
@@ -188,6 +189,13 @@ void playBttnHit() {
   delay(buttonDelay);
 }
 
+void setupMotors() {
+  pinMode(RightMotorDirectionPin, OUTPUT);
+  pinMode(RightMotorEnablePin, OUTPUT);
+  pinMode(LeftMotorDirectionPin, OUTPUT);
+  pinMode(LeftMotorEnablePin, OUTPUT);
+}
+
 void runMotors(byte motorValue) {
   /*
   byte 0: Right motor control (1=on)
@@ -198,6 +206,27 @@ void runMotors(byte motorValue) {
   Ctrl: 0=off, 1=on
   Dir:  0=reverse, 1=forward
   */
+
+  int rightMotorOn = motorValue & 0xFF;
+  int rightMotorDirection = (motorValue >> 8) & 0xFF;
+  int leftMotorOn = (motorValue >> 16) & 0xFF;
+  int leftMotorDirection = (motorValue >> 24) & 0xFF;
+
+  if (rightMotorOn) {
+    digitalWrite(RightMotorDirectionPin, rightMotorDirection);
+    digitalWrite(RightMotorEnablePin, HIGH);
+  }
+  else {
+    digitalWrite(RightMotorEnablePin, LOW);
+  }
+
+  if (leftMotorOn) {
+    digitalWrite(LeftMotorDirectionPin, leftMotorDirection);
+    digitalWrite(LeftMotorEnablePin, HIGH);
+  }
+  else {
+    digitalWrite(LeftMotorEnablePin, LOW);
+  }
 
 }
 
