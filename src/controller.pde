@@ -188,6 +188,13 @@ void playBttnHit() {
   delay(buttonDelay);
 }
 
+void setupMotors() {
+  pinMode(RightMotorDirectionPin, OUTPUT);
+  pinMode(RightMotorEnablePin, OUTPUT);
+  pinMode(LeftMotorDirectionPin, OUTPUT);
+  pinMode(LeftMotorEnablePin, OUTPUT);
+}
+
 void runMotors(byte motorValue) {
   /*
   byte 0: Right motor control (1=on)
